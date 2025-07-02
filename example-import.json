@@ -1,0 +1,54 @@
+{
+  "cards": [
+    {
+      "title": "ChatGPT Plus",
+      "description": "OpenAI的高级AI助手，支持GPT-4模型，提供更快的响应速度和优先访问权。",
+      "type": "ai_service",
+      "price": 20,
+      "url": "https://chat.openai.com/",
+      "tags": ["AI", "聊天", "GPT-4"]
+    },
+    {
+      "title": "GitHub Copilot",
+      "description": "AI驱动的代码助手，帮助开发者更快地编写代码。",
+      "type": "tool",
+      "price": 10,
+      "url": "https://github.com/features/copilot",
+      "tags": ["AI", "编程", "代码助手"]
+    },
+    {
+      "title": "Notion Pro",
+      "description": "强大的笔记和项目管理工具，支持团队协作。",
+      "type": "tool",
+      "price": 8,
+      "url": "https://www.notion.so/",
+      "tags": ["笔记", "项目管理", "协作"]
+    }
+  ],
+  "decks": [
+    {
+      "name": "AI工具套装",
+      "description": "精选的AI工具集合，提升工作效率",
+      "isPublic": true,
+      "tags": ["AI", "效率"],
+      "cards": [
+        {
+          "title": "Claude Pro",
+          "description": "Anthropic的AI助手，擅长长文本处理和分析。",
+          "type": "ai_service",
+          "price": 20,
+          "url": "https://claude.ai/",
+          "tags": ["AI", "分析", "长文本"]
+        },
+        {
+          "title": "Midjourney",
+          "description": "AI图像生成工具，创造惊艳的艺术作品。",
+          "type": "ai_service",
+          "price": 10,
+          "url": "https://midjourney.com/",
+          "tags": ["AI", "图像生成", "艺术"]
+        }
+      ]
+    }
+  ]
+}
