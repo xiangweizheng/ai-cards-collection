@@ -22,6 +22,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({
   const [jsonInput, setJsonInput] = useState('');
   const [isImporting, setIsImporting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showExamples, setShowExamples] = useState(false);
   const [previewData, setPreviewData] = useState<{
     cards: number;
     decks: number;
@@ -131,6 +132,67 @@ export const ImportModal: React.FC<ImportModalProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* 左侧：导入区域 */}
             <div className="space-y-4">
+              {/* 导入说明 */}
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-md">
+                <h3 className="text-sm font-medium text-blue-900 mb-2">📋 支持的导入格式</h3>
+                <div className="text-sm text-blue-800 space-y-1">
+                  <div>• <strong>单个卡片</strong>：直接粘贴卡片JSON对象</div>
+                  <div>• <strong>单个卡组</strong>：包含name、description和cards数组</div>
+                  <div>• <strong>批量导入</strong>：包含cards和/或decks数组</div>
+                  <div>• <strong>完整导出</strong>：支持导入完整的导出文件</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowExamples(!showExamples)}
+                  className="mt-2 text-blue-600 hover:text-blue-800 text-sm underline"
+                >
+                  {showExamples ? '隐藏' : '查看'}示例格式
+                </button>
+              </div>
+
+              {/* 示例格式 */}
+              {showExamples && (
+                <div className="space-y-3">
+                  <div className="p-3 bg-gray-50 border border-gray-200 rounded-md">
+                    <h4 className="text-sm font-medium text-gray-900 mb-2">单个卡片示例：</h4>
+                    <pre className="text-xs text-gray-700 overflow-x-auto whitespace-pre-wrap">
+{`{
+  "title": "ChatGPT",
+  "description": "OpenAI的AI对话助手",
+  "type": "tool_website",
+  "rarity": "legendary",
+  "price": 20,
+  "url": "https://chat.openai.com",
+  "tags": ["AI", "对话"]
+}`}
+                    </pre>
+                  </div>
+
+                  <div className="p-3 bg-gray-50 border border-gray-200 rounded-md">
+                    <h4 className="text-sm font-medium text-gray-900 mb-2">单个卡组示例：</h4>
+                    <pre className="text-xs text-gray-700 overflow-x-auto whitespace-pre-wrap">
+{`{
+  "name": "AI工具精选",
+  "description": "精选的AI工具集合",
+  "isPublic": true,
+  "tags": ["AI", "工具"],
+  "cards": [
+    {
+      "title": "ChatGPT",
+      "description": "OpenAI的AI对话助手",
+      "type": "tool_website",
+      "rarity": "legendary",
+      "price": 20,
+      "url": "https://chat.openai.com",
+      "tags": ["AI", "对话"]
+    }
+  ]
+}`}
+                    </pre>
+                  </div>
+                </div>
+              )}
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   JSON数据

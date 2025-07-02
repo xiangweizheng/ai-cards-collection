@@ -1,0 +1,59 @@
+{
+  "cards": [
+    {
+      "title": "GitHub Copilot",
+      "description": "GitHub的AI代码助手，支持多种编程语言的智能补全",
+      "type": "tool_website",
+      "rarity": "epic",
+      "price": 10,
+      "url": "https://github.com/features/copilot",
+      "tags": ["AI", "GitHub", "代码助手", "编程"]
+    },
+    {
+      "title": "Midjourney",
+      "description": "强大的AI图像生成工具，支持文本到图像的创作",
+      "type": "tool_website",
+      "rarity": "legendary",
+      "price": 30,
+      "url": "https://midjourney.com",
+      "tags": ["AI", "图像生成", "创作", "艺术"]
+    },
+    {
+      "title": "Notion AI",
+      "description": "集成在Notion中的AI写作助手，支持内容生成和优化",
+      "type": "tool_website",
+      "rarity": "rare",
+      "price": 8,
+      "url": "https://notion.so",
+      "tags": ["AI", "写作", "笔记", "生产力"]
+    }
+  ],
+  "decks": [
+    {
+      "name": "AI创作工具",
+      "description": "专注于创意和内容创作的AI工具集合",
+      "isPublic": true,
+      "tags": ["AI", "创作", "内容"],
+      "cards": [
+        {
+          "title": "Midjourney",
+          "description": "强大的AI图像生成工具，支持文本到图像的创作",
+          "type": "tool_website",
+          "rarity": "legendary",
+          "price": 30,
+          "url": "https://midjourney.com",
+          "tags": ["AI", "图像生成", "创作", "艺术"]
+        },
+        {
+          "title": "Notion AI",
+          "description": "集成在Notion中的AI写作助手，支持内容生成和优化",
+          "type": "tool_website",
+          "rarity": "rare",
+          "price": 8,
+          "url": "https://notion.so",
+          "tags": ["AI", "写作", "笔记", "生产力"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "AI工具精选",
+  "description": "精选的AI工具集合，适合开发者和创作者使用",
+  "isPublic": true,
+  "tags": ["AI", "工具", "开发"],
+  "cards": [
+    {
+      "title": "ChatGPT",
+      "description": "OpenAI的对话式AI助手，支持代码生成、文本创作、问题解答等多种功能",
+      "type": "tool_website",
+      "rarity": "legendary",
+      "price": 20,
+      "url": "https://chat.openai.com",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
+      "tags": ["AI", "ChatGPT", "OpenAI", "对话", "代码生成"]
+    },
+    {
+      "title": "Claude",
+      "description": "Anthropic的AI助手，代码能力强大，支持长文本处理",
+      "type": "tool_website", 
+      "rarity": "epic",
+      "price": 15,
+      "url": "https://claude.ai",
+      "imageUrl": "https://claude.ai/favicon.ico",
+      "tags": ["AI", "Claude", "Anthropic", "助手", "代码"]
+    },
+    {
+      "title": "Cursor",
+      "description": "用户量最大的AI代码编辑器，支持智能代码补全和生成",
+      "type": "tool_website",
+      "rarity": "legendary",
+      "price": 25,
+      "url": "https://cursor.sh",
+      "tags": ["IDE", "AI", "代码编辑器", "开发工具"]
+    }
+  ]
+}

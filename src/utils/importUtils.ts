@@ -93,41 +93,118 @@ export function convertImportDeckToDeck(importDeck: ImportDeckData, cardIds: str
 }
 
 /**
+ * 将完整的Card对象转换为ImportCardData
+ */
+function convertFullCardToImportCard(card: unknown): ImportCardData | null {
+  if (!card || typeof card !== 'object') return null;
+  const cardObj = card as Record<string, unknown>;
+  if (!cardObj.title || !cardObj.description) return null;
+
+  return {
+    title: cardObj.title as string,
+    description: cardObj.description as string,
+    type: cardObj.type as CardType,
+    rarity: cardObj.rarity as CardRarity,
+    price: cardObj.price as number,
+    url: cardObj.url as string,
+    imageUrl: cardObj.imageUrl as string,
+    tags: Array.isArray(cardObj.tags) ? cardObj.tags as string[] : []
+  };
+}
+
+/**
+ * 将完整的CardDeck对象转换为ImportDeckData
+ */
+function convertFullDeckToImportDeck(deck: unknown, allCards: unknown[]): ImportDeckData | null {
+  if (!deck || typeof deck !== 'object') return null;
+  const deckObj = deck as Record<string, unknown>;
+  if (!deckObj.name || !deckObj.description) return null;
+
+  // 根据cardIds找到对应的卡片
+  const deckCards = Array.isArray(deckObj.cardIds) ?
+    deckObj.cardIds.map((cardId: unknown) => {
+      const card = allCards.find((c: unknown) => {
+        const cardObj = c as Record<string, unknown>;
+        return cardObj.id === cardId;
+      });
+      return card ? convertFullCardToImportCard(card) : null;
+    }).filter(Boolean) as ImportCardData[] : [];
+
+  return {
+    name: deckObj.name as string,
+    description: deckObj.description as string,
+    isPublic: deckObj.isPublic as boolean,
+    tags: Array.isArray(deckObj.tags) ? deckObj.tags as string[] : [],
+    cards: deckCards
+  };
+}
+
+/**
  * 解析JSON导入数据
  */
 export function parseImportData(jsonString: string): ImportData | null {
   try {
     const data = JSON.parse(jsonString);
-    
+
     // 支持单个卡片导入
-    if (data.title && data.description) {
+    if (data.title && data.description && !data.cards && !data.decks) {
       const card = validateCardData(data);
       return card ? { cards: [card] } : null;
     }
-    
+
     // 支持单个卡组导入
-    if (data.name && data.description && !data.title) {
+    if (data.name && data.description && !data.title && !data.cards && !data.decks) {
       const deck = validateDeckData(data);
       return deck ? { decks: [deck] } : null;
     }
-    
-    // 支持批量导入
+
+    // 支持完整存储格式导入（包含cards和decks数组）
     const result: ImportData = {};
-    
+
     if (Array.isArray(data.cards)) {
-      const validCards = data.cards.map(validateCardData).filter(Boolean) as ImportCardData[];
-      if (validCards.length > 0) {
-        result.cards = validCards;
+      // 检查是否是完整的Card对象格式
+      const isFullCardFormat = data.cards.length > 0 && data.cards[0].id && data.cards[0].createdAt;
+
+      if (isFullCardFormat) {
+        // 转换完整Card对象为ImportCardData
+        const validCards = data.cards.map(convertFullCardToImportCard).filter(Boolean) as ImportCardData[];
+        if (validCards.length > 0) {
+          result.cards = validCards;
+        }
+      } else {
+        // 处理简化的ImportCardData格式
+        const validCards = data.cards.map(validateCardData).filter(Boolean) as ImportCardData[];
+        if (validCards.length > 0) {
+          result.cards = validCards;
+        }
       }
     }
-    
+
     if (Array.isArray(data.decks)) {
-      const validDecks = data.decks.map(validateDeckData).filter(Boolean) as ImportDeckData[];
-      if (validDecks.length > 0) {
-        result.decks = validDecks;
+      // 检查是否是完整的CardDeck对象格式
+      const isFullDeckFormat = data.decks.length > 0 &&
+        typeof data.decks[0] === 'object' &&
+        data.decks[0] !== null &&
+        'id' in data.decks[0] &&
+        'cardIds' in data.decks[0];
+
+      if (isFullDeckFormat) {
+        // 转换完整CardDeck对象为ImportDeckData
+        const validDecks = data.decks.map((deck: unknown) =>
+          convertFullDeckToImportDeck(deck, data.cards || [])
+        ).filter(Boolean) as ImportDeckData[];
+        if (validDecks.length > 0) {
+          result.decks = validDecks;
+        }
+      } else {
+        // 处理简化的ImportDeckData格式
+        const validDecks = data.decks.map(validateDeckData).filter(Boolean) as ImportDeckData[];
+        if (validDecks.length > 0) {
+          result.decks = validDecks;
+        }
       }
     }
-    
+
     return Object.keys(result).length > 0 ? result : null;
   } catch (error) {
     console.error('JSON解析失败:', error);

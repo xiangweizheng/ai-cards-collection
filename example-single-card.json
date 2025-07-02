@@ -1,9 +1,10 @@
 {
-  "title": "Figma Pro",
-  "description": "专业的UI/UX设计工具，支持团队实时协作设计。",
-  "type": "tool",
-  "price": 12,
-  "url": "https://www.figma.com/",
-  "imageUrl": "https://cdn.worldvectorlogo.com/logos/figma-1.svg",
-  "tags": ["设计", "UI", "UX", "协作"]
+  "title": "ChatGPT",
+  "description": "OpenAI开发的强大AI对话助手，支持代码生成、文本创作、问题解答等多种功能",
+  "type": "tool_website",
+  "rarity": "legendary",
+  "price": 20,
+  "url": "https://chat.openai.com",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
+  "tags": ["AI", "ChatGPT", "OpenAI", "对话", "代码生成"]
 }

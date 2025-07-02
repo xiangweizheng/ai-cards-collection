@@ -11,7 +11,8 @@ export enum CardRarity {
   COMMON = 'common',
   RARE = 'rare',
   EPIC = 'epic',
-  LEGENDARY = 'legendary'
+  LEGENDARY = 'legendary',
+  MYTHICAL = 'mythical'
 }
 
 // 价格等级
@@ -108,6 +109,14 @@ export interface UserSettings {
 export interface ImportData {
   cards?: ImportCardData[];
   decks?: ImportDeckData[];
+}
+
+// 完整存储数据结构（用于导入完整的导出文件）
+export interface FullStorageData {
+  cards?: Card[];
+  decks?: CardDeck[];
+  settings?: UserSettings;
+  lastSync?: string;
 }
 
 // 单个卡片导入数据

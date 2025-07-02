@@ -5,7 +5,8 @@ const RARITY_WEIGHTS = {
   [CardRarity.COMMON]: 60,
   [CardRarity.RARE]: 25,
   [CardRarity.EPIC]: 12,
-  [CardRarity.LEGENDARY]: 3
+  [CardRarity.LEGENDARY]: 3,
+  [CardRarity.MYTHICAL]: 1
 };
 
 // 卡片稀有度颜色映射
@@ -37,6 +38,13 @@ export const RARITY_COLORS = {
     text: 'text-yellow-900',
     glow: 'shadow-lg shadow-yellow-300',
     accent: 'bg-gradient-to-r from-yellow-500 to-orange-500'
+  },
+  [CardRarity.MYTHICAL]: {
+    bg: 'bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50',
+    border: 'border-pink-500',
+    text: 'text-pink-900',
+    glow: 'shadow-lg shadow-pink-300',
+    accent: 'bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500'
   }
 };
 
@@ -61,7 +69,8 @@ export const RARITY_LABELS = {
   [CardRarity.COMMON]: '普通',
   [CardRarity.RARE]: '稀有',
   [CardRarity.EPIC]: '史诗',
-  [CardRarity.LEGENDARY]: '传说'
+  [CardRarity.LEGENDARY]: '传说',
+  [CardRarity.MYTHICAL]: '神话'
 };
 
 // 根据URL判断卡片类型
