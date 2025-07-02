@@ -71,7 +71,7 @@ export const AddCardsToDeckModal: React.FC<AddCardsToDeckModalProps> = ({
             <div>
               <h2 className="text-xl font-bold text-gray-900">添加卡片到卡组</h2>
               <p className="text-sm text-gray-600 mt-1">
-                向 "{deck.name}" 添加卡片
+                向 &ldquo;{deck.name}&rdquo; 添加卡片
               </p>
             </div>
             <button

@@ -11,40 +11,42 @@ function generateId(): string {
 /**
  * 验证卡片数据
  */
-function validateCardData(data: any): ImportCardData | null {
+function validateCardData(data: unknown): ImportCardData | null {
   if (!data || typeof data !== 'object') return null;
-  if (!data.title || typeof data.title !== 'string') return null;
-  if (!data.description || typeof data.description !== 'string') return null;
+  const dataObj = data as Record<string, unknown>;
+  if (!dataObj.title || typeof dataObj.title !== 'string') return null;
+  if (!dataObj.description || typeof dataObj.description !== 'string') return null;
 
   return {
-    title: data.title.trim(),
-    description: data.description.trim(),
-    type: data.type && Object.values(CardType).includes(data.type) ? data.type : CardType.TOOL,
-    rarity: data.rarity && Object.values(CardRarity).includes(data.rarity) ? data.rarity : undefined,
-    price: typeof data.price === 'number' && data.price >= 0 ? data.price : undefined,
-    url: data.url && typeof data.url === 'string' ? data.url.trim() : undefined,
-    imageUrl: data.imageUrl && typeof data.imageUrl === 'string' ? data.imageUrl.trim() : undefined,
-    tags: Array.isArray(data.tags) ? data.tags.filter(tag => typeof tag === 'string').map(tag => tag.trim()) : []
+    title: dataObj.title.trim(),
+    description: dataObj.description.trim(),
+    type: dataObj.type && Object.values(CardType).includes(dataObj.type as CardType) ? dataObj.type as CardType : CardType.TOOL,
+    rarity: dataObj.rarity && Object.values(CardRarity).includes(dataObj.rarity as CardRarity) ? dataObj.rarity as CardRarity : undefined,
+    price: typeof dataObj.price === 'number' && dataObj.price >= 0 ? dataObj.price : undefined,
+    url: dataObj.url && typeof dataObj.url === 'string' ? dataObj.url.trim() : undefined,
+    imageUrl: dataObj.imageUrl && typeof dataObj.imageUrl === 'string' ? dataObj.imageUrl.trim() : undefined,
+    tags: Array.isArray(dataObj.tags) ? dataObj.tags.filter(tag => typeof tag === 'string').map(tag => (tag as string).trim()) : []
   };
 }
 
 /**
  * 验证卡组数据
  */
-function validateDeckData(data: any): ImportDeckData | null {
+function validateDeckData(data: unknown): ImportDeckData | null {
   if (!data || typeof data !== 'object') return null;
-  if (!data.name || typeof data.name !== 'string') return null;
-  if (!data.description || typeof data.description !== 'string') return null;
+  const dataObj = data as Record<string, unknown>;
+  if (!dataObj.name || typeof dataObj.name !== 'string') return null;
+  if (!dataObj.description || typeof dataObj.description !== 'string') return null;
 
-  const cards = Array.isArray(data.cards) 
-    ? data.cards.map(validateCardData).filter(Boolean) as ImportCardData[]
+  const cards = Array.isArray(dataObj.cards)
+    ? dataObj.cards.map(validateCardData).filter(Boolean) as ImportCardData[]
     : [];
 
   return {
-    name: data.name.trim(),
-    description: data.description.trim(),
-    isPublic: typeof data.isPublic === 'boolean' ? data.isPublic : false,
-    tags: Array.isArray(data.tags) ? data.tags.filter(tag => typeof tag === 'string').map(tag => tag.trim()) : [],
+    name: dataObj.name.trim(),
+    description: dataObj.description.trim(),
+    isPublic: typeof dataObj.isPublic === 'boolean' ? dataObj.isPublic : false,
+    tags: Array.isArray(dataObj.tags) ? dataObj.tags.filter(tag => typeof tag === 'string').map(tag => (tag as string).trim()) : [],
     cards
   };
 }

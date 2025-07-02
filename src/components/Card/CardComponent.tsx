@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card as CardType } from '@/types';
 import { RARITY_COLORS, TYPE_ICONS, TYPE_LABELS, RARITY_LABELS } from '@/lib/cardUtils';
-import { formatPrice, formatPriceLevel, getPriceLevelFromPrice, getPriceLevelInfo } from '@/utils/priceUtils';
+import { formatPrice, formatPriceLevel } from '@/utils/priceUtils';
 
 interface CardComponentProps {
   card: CardType;

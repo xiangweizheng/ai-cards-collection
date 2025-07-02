@@ -125,7 +125,8 @@ export const AddCardForm: React.FC<AddCardFormProps> = ({
       } else {
         setErrors(['保存失败，请重试']);
       }
-    } catch (error) {
+    } catch (err) {
+      console.error('保存卡片失败:', err);
       setErrors(['保存时发生错误']);
     } finally {
       setIsSubmitting(false);

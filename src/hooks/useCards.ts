@@ -182,8 +182,9 @@ export const useCards = (): UseCardsReturn => {
       }
 
       // 验证每个卡片的数据结构
-      const validCards = importData.cards.filter((card: any) => {
-        return card.id && card.title && card.description && card.type && card.rarity;
+      const validCards = importData.cards.filter((card: unknown) => {
+        const cardObj = card as Record<string, unknown>;
+        return cardObj.id && cardObj.title && cardObj.description && cardObj.type && cardObj.rarity;
       });
 
       if (validCards.length === 0) {

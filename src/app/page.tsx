@@ -51,7 +51,7 @@ export default function Home() {
     loading: decksLoading,
     error: decksError,
     createDeck,
-    updateDeck,
+    // updateDeck,
     deleteDeck,
     duplicateDeck,
     addCardsToDeck,
@@ -170,7 +170,7 @@ export default function Home() {
   };
 
   // 处理导入完成
-  const handleImportComplete = (newCards: Card[], newDecks: CardDeck[], summary: { cardsAdded: number, decksAdded: number }) => {
+  const handleImportComplete = (_newCards: Card[], _newDecks: CardDeck[], summary: { cardsAdded: number, decksAdded: number }) => {
     // 更新数据
     handleDataChanged();
 

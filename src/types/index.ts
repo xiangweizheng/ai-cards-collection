@@ -36,7 +36,7 @@ export interface Card {
   tags: string[];
   createdAt: Date;
   updatedAt: Date;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 // GitHub仓库卡片特定数据
@@ -144,7 +144,7 @@ export interface LinkParseResult {
   title: string;
   description: string;
   type: CardType;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   imageUrl?: string;
   tags: string[];
 }

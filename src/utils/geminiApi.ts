@@ -105,7 +105,7 @@ export async function polishCardWithGemini(cardData: CardPolishRequest): Promise
         tags: result.tags,
         suggestedPrice: typeof result.suggestedPrice === 'number' ? result.suggestedPrice : undefined
       };
-    } catch (parseError) {
+    } catch {
       console.error('Failed to parse Gemini response:', generatedText);
       throw new Error('Failed to parse AI response');
     }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardDeck } from '@/types';
 import { CardComponent } from '@/components/Card/CardComponent';
 
@@ -170,7 +170,7 @@ export const DeckDetailModal: React.FC<DeckDetailModalProps> = ({
               <div className="flex flex-col items-center justify-center py-12 text-gray-500">
                 <div className="text-6xl mb-4">📝</div>
                 <p className="text-lg font-medium">卡组还没有卡片</p>
-                <p className="text-sm mt-2">点击"添加卡片"按钮来添加第一张卡片</p>
+                <p className="text-sm mt-2">点击&ldquo;添加卡片&rdquo;按钮来添加第一张卡片</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

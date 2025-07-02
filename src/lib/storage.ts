@@ -1,4 +1,4 @@
-import { Card, CardDeck, LocalStorageData, UserSettings, CardType, CardRarity } from '@/types';
+import { Card, CardDeck, LocalStorageData, UserSettings } from '@/types';
 
 // 存储键名常量
 const STORAGE_KEYS = {

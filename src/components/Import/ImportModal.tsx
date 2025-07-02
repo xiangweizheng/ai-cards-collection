@@ -43,7 +43,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({
         } else {
           setError('JSON格式不正确或不包含有效的卡片/卡组数据');
         }
-      } catch (err) {
+      } catch {
         setError('JSON格式错误');
       }
     }

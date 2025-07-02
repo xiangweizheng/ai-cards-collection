@@ -142,7 +142,8 @@ export const EditCardModal: React.FC<EditCardModalProps> = ({
 
     try {
       onSave(updatedCard);
-    } catch (error) {
+    } catch (err) {
+      console.error('更新卡片失败:', err);
       setErrors(['保存时发生错误']);
     } finally {
       setIsSubmitting(false);

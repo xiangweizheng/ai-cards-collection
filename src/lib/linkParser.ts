@@ -56,7 +56,7 @@ class GitHubRepoParser implements LinkParser {
           lastUpdated: new Date(repoData.updated_at)
         }
       };
-    } catch (error) {
+    } catch {
       // 如果API调用失败，返回基础信息
       const match = url.match(/github\.com\/([^\/]+)\/([^\/]+)/);
       const [, owner, repo] = match || ['', 'unknown', 'unknown'];
@@ -116,7 +116,7 @@ class GenericWebParser implements LinkParser {
           url
         }
       };
-    } catch (error) {
+    } catch {
       return {
         title: '未知网站',
         description: '无法解析的链接',
@@ -222,7 +222,7 @@ export class LinkParserService {
   async validateLink(url: string): Promise<boolean> {
     try {
       // 使用HEAD请求检查链接是否可访问
-      const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+      await fetch(url, { method: 'HEAD', mode: 'no-cors' });
       return true; // 如果没有抛出错误，说明链接可能是有效的
     } catch {
       return false;
