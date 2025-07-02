@@ -130,14 +130,22 @@ export const CardComponent: React.FC<CardComponentProps> = ({
       {/* 元数据显示 */}
       {card.metadata && (
         <div className="text-xs text-gray-500 mb-2">
-          {card.type === 'github_repo' && card.metadata.stars && (
+          {card.type === 'github_repo' &&
+           typeof card.metadata === 'object' &&
+           card.metadata !== null &&
+           'stars' in card.metadata &&
+           typeof (card.metadata as Record<string, unknown>).stars === 'number' && (
             <span className="flex items-center gap-1">
-              ⭐ {card.metadata.stars.toLocaleString()} stars
+              ⭐ {((card.metadata as Record<string, unknown>).stars as number).toLocaleString()} stars
             </span>
           )}
-          {card.type === 'tool_website' && card.metadata.pricing && (
+          {card.type === 'tool_website' &&
+           typeof card.metadata === 'object' &&
+           card.metadata !== null &&
+           'pricing' in card.metadata &&
+           typeof (card.metadata as Record<string, unknown>).pricing === 'string' && (
             <span className="capitalize">
-              💰 {card.metadata.pricing}
+              💰 {(card.metadata as Record<string, unknown>).pricing as string}
             </span>
           )}
         </div>

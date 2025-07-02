@@ -95,8 +95,14 @@ export function detectCardRarity(card: Partial<Card>): CardRarity {
   let score = 0;
   
   // GitHub仓库特殊判断
-  if (card.type === CardType.GITHUB_REPO && card.metadata) {
-    const stars = card.metadata.stars || 0;
+  if (card.type === CardType.GITHUB_REPO &&
+      card.metadata &&
+      typeof card.metadata === 'object' &&
+      card.metadata !== null &&
+      'stars' in card.metadata) {
+    const stars = typeof (card.metadata as Record<string, unknown>).stars === 'number'
+      ? (card.metadata as Record<string, unknown>).stars as number
+      : 0;
     if (stars > 10000) score += 30;
     else if (stars > 1000) score += 20;
     else if (stars > 100) score += 10;

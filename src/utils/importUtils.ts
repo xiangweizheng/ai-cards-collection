@@ -20,7 +20,7 @@ function validateCardData(data: unknown): ImportCardData | null {
   return {
     title: dataObj.title.trim(),
     description: dataObj.description.trim(),
-    type: dataObj.type && Object.values(CardType).includes(dataObj.type as CardType) ? dataObj.type as CardType : CardType.TOOL,
+    type: dataObj.type && Object.values(CardType).includes(dataObj.type as CardType) ? dataObj.type as CardType : CardType.CUSTOM,
     rarity: dataObj.rarity && Object.values(CardRarity).includes(dataObj.rarity as CardRarity) ? dataObj.rarity as CardRarity : undefined,
     price: typeof dataObj.price === 'number' && dataObj.price >= 0 ? dataObj.price : undefined,
     url: dataObj.url && typeof dataObj.url === 'string' ? dataObj.url.trim() : undefined,
@@ -62,7 +62,7 @@ export function convertImportCardToCard(importCard: ImportCardData): Card {
     id: generateId(),
     title: importCard.title,
     description: importCard.description,
-    type: importCard.type || CardType.TOOL,
+    type: importCard.type || CardType.CUSTOM,
     rarity,
     price: importCard.price,
     url: importCard.url,

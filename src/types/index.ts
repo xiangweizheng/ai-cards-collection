@@ -106,8 +106,8 @@ export interface UserSettings {
 
 // JSON导入数据结构
 export interface ImportData {
-  cards?: Partial<Card>[];
-  decks?: Partial<CardDeck>[];
+  cards?: ImportCardData[];
+  decks?: ImportDeckData[];
 }
 
 // 单个卡片导入数据
