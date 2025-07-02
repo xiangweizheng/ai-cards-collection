@@ -144,7 +144,14 @@ function convertFullDeckToImportDeck(deck: unknown, allCards: unknown[]): Import
  */
 export function parseImportData(jsonString: string): ImportData | null {
   try {
-    const data = JSON.parse(jsonString);
+    // 清理字符串，移除可能的BOM和额外空白
+    const cleanedString = jsonString.trim().replace(/^\uFEFF/, '');
+
+    if (!cleanedString) {
+      return null;
+    }
+
+    const data = JSON.parse(cleanedString);
 
     // 支持单个卡片导入
     if (data.title && data.description && !data.cards && !data.decks) {
@@ -208,7 +215,9 @@ export function parseImportData(jsonString: string): ImportData | null {
     return Object.keys(result).length > 0 ? result : null;
   } catch (error) {
     console.error('JSON解析失败:', error);
-    return null;
+    console.error('原始字符串长度:', jsonString.length);
+    console.error('字符串前100个字符:', jsonString.substring(0, 100));
+    throw new Error(`JSON解析失败: ${error instanceof Error ? error.message : '未知错误'}`);
   }
 }
 

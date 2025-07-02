@@ -33,9 +33,15 @@ export const ImportModal: React.FC<ImportModalProps> = ({
     setError(null);
     setPreviewData(null);
 
-    if (value.trim()) {
+    const trimmedValue = value.trim();
+    if (trimmedValue) {
+      // 检查是否看起来像JSON
+      if (!trimmedValue.startsWith('{') && !trimmedValue.startsWith('[')) {
+        setError('输入的内容不是有效的JSON格式（应该以 { 或 [ 开头）');
+        return;
+      }
       try {
-        const importData = parseImportData(value);
+        const importData = parseImportData(trimmedValue);
         if (importData) {
           setPreviewData({
             cards: importData.cards?.length || 0,
@@ -44,8 +50,10 @@ export const ImportModal: React.FC<ImportModalProps> = ({
         } else {
           setError('JSON格式不正确或不包含有效的卡片/卡组数据');
         }
-      } catch {
-        setError('JSON格式错误');
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'JSON格式错误';
+        setError(errorMessage);
+        console.error('导入错误:', err);
       }
     }
   };
@@ -194,9 +202,24 @@ export const ImportModal: React.FC<ImportModalProps> = ({
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  JSON数据
-                </label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    JSON数据
+                  </label>
+                  {jsonInput && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setJsonInput('');
+                        setError(null);
+                        setPreviewData(null);
+                      }}
+                      className="text-sm text-gray-500 hover:text-gray-700"
+                    >
+                      清除
+                    </button>
+                  )}
+                </div>
                 <textarea
                   value={jsonInput}
                   onChange={(e) => handleJsonChange(e.target.value)}
