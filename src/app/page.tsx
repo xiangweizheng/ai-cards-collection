@@ -12,6 +12,7 @@ import { AddCardForm } from '@/components/Card/AddCardForm';
 import { EditCardModal } from '@/components/Card/EditCardModal';
 import { StatsPanel } from '@/components/Stats/StatsPanel';
 import { SettingsModal } from '@/components/Settings/SettingsModal';
+import { StorageSettings } from '@/components/Settings/StorageSettings';
 import { CreateDeckModal } from '@/components/Deck/CreateDeckModal';
 import { DeckDetailModal } from '@/components/Deck/DeckDetailModal';
 import { AddCardsToDeckModal } from '@/components/Deck/AddCardsToDeckModal';
@@ -43,7 +44,9 @@ export default function Home() {
     addCard,
     updateCard,
     deleteCard,
-    refresh: cardsRefresh
+    refresh: cardsRefresh,
+    useSupabase: cardsUseSupabase,
+    setUseSupabase: setCardsUseSupabase
   } = useCards();
 
   const {
@@ -339,7 +342,12 @@ export default function Home() {
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
         onDataChanged={handleDataChanged}
-      />
+      >
+        <StorageSettings
+          useSupabase={cardsUseSupabase}
+          onToggleStorage={setCardsUseSupabase}
+        />
+      </SettingsModal>
 
       {/* 创建卡组模态框 */}
       <CreateDeckModal

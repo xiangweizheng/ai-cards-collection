@@ -7,12 +7,14 @@ interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
   onDataChanged: () => void;
+  children?: React.ReactNode;
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({
   isOpen,
   onClose,
-  onDataChanged
+  onDataChanged,
+  children
 }) => {
   const [isExporting, setIsExporting] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
@@ -222,6 +224,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <p>支持链接解析、智能分类、搜索过滤等功能。</p>
               </div>
             </div>
+
+            {/* 自定义内容 */}
+            {children}
           </div>
 
           <div className="mt-6 pt-4 border-t">

@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { Card, SearchFilters } from '@/types';
 import { storage } from '@/lib/storage';
 import { filterCards, sortCards, getCardStats, extractPopularTags } from '@/lib/cardUtils';
+import { cardOperations } from '@/lib/supabaseStorage';
+import { useAuth } from './useAuth';
 
 export interface UseCardsReturn {
   // 数据状态
@@ -37,12 +39,18 @@ export interface UseCardsReturn {
   
   // 刷新数据
   refresh: () => void;
+
+  // 存储设置
+  useSupabase: boolean;
+  setUseSupabase: (useSupabase: boolean) => void;
 }
 
 export const useCards = (): UseCardsReturn => {
+  const { user } = useAuth();
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [useSupabase, setUseSupabase] = useState(false);
   
   // 搜索和过滤状态
   const [filters, setFilters] = useState<SearchFilters>({});
@@ -54,19 +62,27 @@ export const useCards = (): UseCardsReturn => {
     try {
       setLoading(true);
       setError(null);
-      const loadedCards = storage.getCards();
-      setCards(loadedCards);
+
+      if (useSupabase && user) {
+        // 从Supabase加载
+        const loadedCards = await cardOperations.getAll();
+        setCards(loadedCards);
+      } else {
+        // 从localStorage加载
+        const loadedCards = storage.getCards();
+        setCards(loadedCards);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : '加载卡片失败');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [useSupabase, user]);
 
-  // 初始化加载
+  // 初始化加载和存储切换时重新加载
   useEffect(() => {
     loadCards();
-  }, [loadCards]);
+  }, [loadCards, useSupabase]);
 
   // 计算过滤后的卡片
   const filteredCards = useCallback(() => {
@@ -88,7 +104,16 @@ export const useCards = (): UseCardsReturn => {
   // 添加卡片
   const addCard = useCallback(async (card: Card): Promise<boolean> => {
     try {
-      const success = storage.saveCard(card);
+      let success = false;
+
+      if (useSupabase && user) {
+        // 保存到Supabase
+        success = await cardOperations.create(card);
+      } else {
+        // 保存到localStorage
+        success = storage.saveCard(card);
+      }
+
       if (success) {
         setCards(prev => [...prev, card]);
         return true;
@@ -98,7 +123,7 @@ export const useCards = (): UseCardsReturn => {
       setError(err instanceof Error ? err.message : '添加卡片失败');
       return false;
     }
-  }, []);
+  }, [useSupabase, user]);
 
   // 更新卡片
   const updateCard = useCallback(async (updatedCard: Card): Promise<boolean> => {
@@ -266,6 +291,10 @@ export const useCards = (): UseCardsReturn => {
     importCards,
     
     // 刷新数据
-    refresh
+    refresh,
+
+    // 存储设置
+    useSupabase,
+    setUseSupabase
   };
 };
